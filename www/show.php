@@ -31,8 +31,8 @@ if (isset($_GET['reset'])) {
     }
 }
 
-
-$aGpios = $oSql->selectArray('gpio');
+if (isset($_GET['id'])) $aGpios = $oSql->selectArray('gpio', ['id' => intval($_GET['id'])]);
+else $aGpios = $oSql->selectArray('gpio');
 
 if (isset($_GET['id'])) $aData = $oSql->selectArray('data', ['id' => intval($_GET['id'])]);
 else $aData = $oSql->selectArray('data');
@@ -58,7 +58,8 @@ else $aData = $oSql->selectArray('data');
 
 <body>
 <p>
-    [<a href="index.php">Startseite</a>][<a href="show.php?clear=true">Tabelle leeren</a>][<a href="show.php?reset=true">Tabelle zurücksetzen</a>}
+    [<a href="index.php">Startseite</a>][<a href="show.php?clear=true">Tabelle leeren</a>][<a
+        href="show.php?reset=true">Tabelle zurücksetzen</a>}<?php if(isset($_GET['id'])) { ?>[<a href="show.php">Log für alle GPIO-Ports zeigen</a>] <?php } ?>
 </p><br>
 
 <table>

@@ -11,13 +11,19 @@ require_once('classes/mysql.class.php');
 
 $oSql = new cMySql();
 
+//check if form was submitted
+if (isset($_POST['name']) and isset($_POST['kernel_path']) and isset($_POST['refresh_interval']) and isset($_POST['log_threshold']) and isset($_POST['log_on'])) {
+    echo('submit');
+    if (isset($_GET['id'])) echo($oSql->insertUpdate('gpio', ['name' => $_POST['name'], 'kernel_path' => $_POST['kernel_path'], 'refresh_interval' => intval($_POST['refresh_interval']), 'log_threshold' => $_POST['log_threshold'], 'log_on' => $_POST['log_on']], ['id' => $_GET['id']]));
+    else $oSql->insertUpdate('gpio', ['name' => $_POST['name'], 'kernel_path' => $_POST['kernel_path'], 'refresh_interval' => intval($_POST['refresh_interval']), 'log_threshold' => $_POST['log_threshold'], 'log_on' => $_POST['log_on']], null);
+}
+
 if (isset($_GET['id'])) {
     $aGpio = $oSql->selectOne('gpio', ['id' => intval($_GET['id'])]);
     if (!$aGpio['id'] == NULL) {
         //nix^^
-
     } else die('Wrong gpio id');
-} else die('Wrong gpio id');
+}
 
 ?>
 
@@ -35,10 +41,10 @@ if (isset($_GET['id'])) {
 
 <body>
 <p>
-    [<a href="index.php">Startseite</a>][<a href="show.php">Log zeigen</a>]
+    [<a href="index.php">Startseite</a>][<a href="show.php">Log zeigen</a>]<?php if(isset($_GET['id'])) { ?>[<a href="show.php?id=<?php echo($_GET['id']); ?>">Log für diesen GPIO-Port zeigen</a>] <?php } ?>
 </p><br>
 
-<form action="gpio.php?id=<?php echo($aGpio['id']); ?>" method="post">
+<form action="gpio.php<?php if(isset($_GET['id'])) echo('?id=' . $aGpio['id']); ?>" method="post">
     <table>
         <tr>
             <td><label for="name">Name</label></td>

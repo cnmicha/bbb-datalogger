@@ -57,16 +57,17 @@ $aAllGpios = $oSql->selectArray('gpio');
 
 <body>
 <p>
-    [<a href="show.php">Log zeigen</a>][<a href="index.php?start=true">Dienst starten</a>][<a href="index.php?stop=true">Dienst stoppen</a>]
+    [<a href="show.php">Log zeigen</a>][<a href="index.php?start=true">Dienst starten</a>][<a
+        href="index.php?stop=true">Dienst stoppen</a>]
 </p><br>
 
 <table>
     <tr>
         <td><span style="font-weight: bold;">Name</span></td>
         <td><span style="font-weight: bold;">Gpio Nr</span></td>
-        <td><span style="font-weight: bold;">Refresh interval</span></td>
-        <td><span style="font-weight: bold;">Log threshold</span></td>
-        <td><span style="font-weight: bold;">Log turned on</span></td>
+        <td><span style="font-weight: bold;">Aktualisierungsintervall</span></td>
+        <td><span style="font-weight: bold;">Log Schwellwert</span></td>
+        <td><span style="font-weight: bold;">Log ein</span></td>
     </tr>
 
     <?php
