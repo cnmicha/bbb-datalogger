@@ -10,20 +10,19 @@ require_once('config/config.inc.php');
 require_once('classes/mysql.class.php');
 
 
+$oSql = new cMySql();
 
-init();
-run();
+$aPorts = $oSql->selectArray('gpio');
+print_r($aPorts);
 
 
+foreach ($aPorts as $aPort) {
+    if (file_exists('/sys/class/gpio/gpio' . $aPort['kernel_path'] . '/value')) { //gpio was already exported
+        exec('echo ' . $aPort['kernel_path'] . ' > /sys/class/gpio/unexport');
+    }
 
-//functions
+    exec('echo ' . $aPort['kernel_path'] . ' > /sys/class/gpio/export');
+    exec('echo "in" > /sys/class/gpio/gpio' . $aPort['kernel_path'] . '/direction');
 
-function init() {
-    $oSql = new cMySql();
-
-    $oSql->selectArray('gpio');
-}
-
-function run() {
-
+    //exec('php worker.php ' . $aPort['kernel_path'] . ' nohup');
 }
