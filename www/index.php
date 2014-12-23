@@ -6,9 +6,31 @@
  * Time: 19:58
  */
 
+const WORKER_SH = '/root/datalogger/service.sh';
+
 
 require_once('config/config.inc.php');
 require_once('classes/mysql.class.php');
+
+
+if (isset($_GET['start'])) {
+    if ($_GET['start'] == 'true') {
+        exec('sudo sh ' . WORKER_SH);
+
+        header("HTTP/1.1 303 See Other");
+        header('Location: index.php');
+    }
+}
+
+if (isset($_GET['stop'])) {
+    if ($_GET['stop'] == 'true') {
+        exec('sudo killall php');
+
+        header("HTTP/1.1 303 See Other");
+        header('Location: index.php');
+    }
+}
+
 
 $oSql = new cMySql();
 
@@ -35,7 +57,7 @@ $aAllGpios = $oSql->selectArray('gpio');
 
 <body>
 <p>
-    [<a href="show.php">Log zeigen</a>]
+    [<a href="show.php">Log zeigen</a>][<a href="index.php?start=true">Dienst starten</a>][<a href="index.php?stop=true">Dienst stoppen</a>]
 </p><br>
 
 <table>
@@ -48,7 +70,6 @@ $aAllGpios = $oSql->selectArray('gpio');
     </tr>
 
     <?php
-    print_r($aAllGpios);
     foreach ($aAllGpios as $aGpio) {
         echo('<tr>');
         echo('<td>' . $aGpio['name'] . '</td>');
