@@ -59,7 +59,7 @@ else $aData = $oSql->selectArray('data');
 <body>
 <p>
     [<a href="index.php">Startseite</a>][<a href="show.php?clear=true">Tabelle leeren</a>][<a
-        href="show.php?reset=true">Tabelle zurücksetzen</a>}<?php if(isset($_GET['id'])) { ?>[<a href="show.php">Log für alle GPIO-Ports zeigen</a>] <?php } ?>
+        href="show.php?reset=true">Tabelle zurücksetzen</a>]<?php if(isset($_GET['id'])) { ?>[<a href="show.php">Log für alle GPIO-Ports zeigen</a>] <?php } ?>
 </p><br>
 
 <table>

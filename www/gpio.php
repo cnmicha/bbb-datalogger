@@ -16,6 +16,7 @@ if (isset($_POST['name']) and isset($_POST['kernel_path']) and isset($_POST['ref
     echo('submit');
     if (isset($_GET['id'])) echo($oSql->insertUpdate('gpio', ['name' => $_POST['name'], 'kernel_path' => $_POST['kernel_path'], 'refresh_interval' => intval($_POST['refresh_interval']), 'log_threshold' => $_POST['log_threshold'], 'log_on' => $_POST['log_on']], ['id' => $_GET['id']]));
     else $oSql->insertUpdate('gpio', ['name' => $_POST['name'], 'kernel_path' => $_POST['kernel_path'], 'refresh_interval' => intval($_POST['refresh_interval']), 'log_threshold' => $_POST['log_threshold'], 'log_on' => $_POST['log_on']], null);
+    echo('done');
 }
 
 if (isset($_GET['id'])) {

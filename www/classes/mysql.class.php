@@ -118,7 +118,7 @@ class cMySql
         $this->selectRows($tableName, $whereArray);
         if (!$this->error()) {
             if ($this->hasRecords()) {
-                return $this->tpdateRows($tableName, $valuesArray, $whereArray);
+                return $this->updateRows($tableName, $valuesArray, $whereArray);
             } else {
                 return $this->insertRow($tableName, $valuesArray);
             }
