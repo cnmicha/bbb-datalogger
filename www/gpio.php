@@ -98,6 +98,10 @@ if (isset($_GET['delete'])) {
             <td></td>
             <td><input type="submit" value="Speichern"></td>
         </tr>
+        <tr>
+            <td></td>
+            <td><?php if(!isset($_GET['id'])) { ?>Der Dienst muss nach dem Hinzufügen eines GPIOS neugestartet werden!<?php } ?></td>
+        </tr>
     </table>
 </form>
 </body>
