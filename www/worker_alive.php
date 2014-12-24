@@ -23,18 +23,6 @@ foreach ($aWorkers as $aWorker) {
     }
 }
 
-?>
 
-<html>
-<head>
-    <meta charset="utf-8">
-    <title></title>
-</head>
-
-<body>
-<?php
-if($bAlive) echo('<span style="color: green;">Dienst läuft.</span>');
+if ($bAlive) echo('<span style="color: green;">Dienst läuft.</span>');
 else echo('<span style="color: red;">Dienst gestoppt.</span>');
-?>
-</body>
-</html>

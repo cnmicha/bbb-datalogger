@@ -29,15 +29,6 @@ if (isset($_GET['stop'])) {
     }
 }
 
-if (isset($_GET['start'])) {
-    if ($_GET['start'] == 'true') {
-        exec('sudo php /root/datalogger/service.php');
-
-        header("HTTP/1.1 303 See Other");
-        header('Location: index.php');
-    }
-}
-
 if (isset($_GET['shutdown'])) {
     if ($_GET['shutdowm'] == 'true') {
         exec('sudo shutdown -h now');
@@ -80,7 +71,6 @@ $aAllGpios = $oSql->selectArray('gpio');
 <body>
 <p>
     [<a href="show.php">Log zeigen</a>]<br>
-    [<a href="index.php?start=true">Dienst starten (<span style="color: red;">Achtung!</span>)</a>]<br>
     [<a href="index.php?stop=true">Dienst stoppen</a>]<br>
     [<a href="index.php?restart=true">Beaglebone neustarten</a>][<a href="index.php?shutdown=true">Beaglebone
         herunterfahren</a>]
