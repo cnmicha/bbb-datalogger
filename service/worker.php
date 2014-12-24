@@ -15,10 +15,11 @@ $aPort = $oSql->selectOne('gpio', ['id' => intval($argv[1])]);
 
 echo('got gpio port ' . $aPort['kernel_path']);
 
+if($oSql->selectOne('sys', ['name' => 'worker_exit'])['value'] == '1') $bRun = false;
+else $bRun = true;
 
 
-
-while (true) {
+while ($bRun) {
     $aPort = $oSql->selectOne('gpio', ['id' => $argv[1]]); //refresh gpio settings
 
     $iValue = intval(file_get_contents('/sys/class/gpio/gpio' . $aPort['kernel_path'] . '/value'));
@@ -32,6 +33,7 @@ while (true) {
         }
     }
 
+    if($oSql->selectOne('sys', ['name' => 'worker_exir'])['value'] == 1) $bRun = false;
 
     usleep($aPort['refresh_interval']);
 }

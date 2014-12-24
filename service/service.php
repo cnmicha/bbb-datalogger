@@ -12,6 +12,10 @@ require_once('classes/mysql.class.php');
 
 $oSql = new cMySql();
 
+
+$oSql->updateRows('sys', ['value' => '0'], ['name' => 'worker_exit']);
+
+
 $aPorts = $oSql->selectArray('gpio');
 print_r($aPorts);
 

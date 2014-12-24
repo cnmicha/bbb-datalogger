@@ -10,6 +10,8 @@
 require_once('config/config.inc.php');
 require_once('classes/mysql.class.php');
 
+$oSql = new cMySql();
+
 
 if (isset($_GET['restart'])) {
     if ($_GET['restart'] == 'true') {
@@ -20,9 +22,19 @@ if (isset($_GET['restart'])) {
     }
 }
 
+if (isset($_GET['start'])) {
+    if ($_GET['start'] == 'true') {
+        exec('sudo sh /root/datalogger/start_service.sh');
+
+        header("HTTP/1.1 303 See Other");
+        header('Location: index.php');
+    }
+}
+
 if (isset($_GET['stop'])) {
     if ($_GET['stop'] == 'true') {
-        exec('sudo killall php');
+        $oSql->updateRows('sys', ['value' => '1'], ['name' => 'worker_exit']);
+
 
         header("HTTP/1.1 303 See Other");
         header('Location: index.php');
@@ -38,8 +50,6 @@ if (isset($_GET['shutdown'])) {
     }
 }
 
-
-$oSql = new cMySql();
 
 $aAllGpios = $oSql->selectArray('gpio');
 
