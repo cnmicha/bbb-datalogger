@@ -13,16 +13,16 @@ require_once('classes/mysql.class.php');
 
 $oSql = new cMySql();
 
-$aWorkers = $oSql->selectArray('gpio');
+$aWorkers = $oSql->selectArray('alive');
 
 $bAlive = true;
 
 foreach ($aWorkers as $aWorker) {
-    if (strtotime(date('Y-m-d H:i:s')) > strtotime($aWorker['worker_lastseen']) + TIMEOUT_SEC) {
+    if (strtotime(date('Y-m-d H:i:s')) > (strtotime($aWorker['worker_lastseen']) + TIMEOUT_SEC)) {
         $bAlive = false;
     }
 }
 
 
-if ($bAlive) echo('<span style="color: green;">Dienst läuft.</span>');
+if($bAlive) echo('<span style="color: green;">Dienst läuft.</span>');
 else echo('<span style="color: red;">Dienst gestoppt.</span>');

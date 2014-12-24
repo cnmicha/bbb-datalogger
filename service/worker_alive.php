@@ -14,7 +14,7 @@ $oSql = new cMySql();
 
 
 while (true) {
-    $oSql->updateRows('gpio', ['worker_lastseen' => date('Y-m-d H:i:s')], ['id' => intval($argv[1])]);
+    $oSql->updateRows('alive', ['worker_lastseen' => date('Y-m-d H:i:s')], ['id' => 1]);
     echo('updated.');
 
     usleep(4000000);

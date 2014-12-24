@@ -25,5 +25,6 @@ foreach ($aPorts as $aPort) {
     exec('echo "in" > /sys/class/gpio/gpio' . $aPort['kernel_path'] . '/direction');
 
     exec('php worker.php ' . $aPort['id'] . ' > /dev/null 2>/dev/null &');
-    exec('php worker_alive.php ' . $aPort['id'] . ' > /dev/null 2>/dev/null &');
 }
+
+exec('php worker_alive.php > /dev/null 2>/dev/null &');
