@@ -32,5 +32,6 @@ while (true) {
         }
     }
 
+
     usleep($aPort['refresh_interval']);
 }

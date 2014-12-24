@@ -31,11 +31,16 @@ if (isset($_GET['reset'])) {
     }
 }
 
-if (isset($_GET['id'])) $aGpios = $oSql->selectArray('gpio', ['id' => intval($_GET['id'])]);
-else $aGpios = $oSql->selectArray('gpio');
+$aGpioData = $oSql->selectArray('gpio');
 
-if (isset($_GET['id'])) $aData = $oSql->selectArray('data', ['id' => intval($_GET['id'])]);
+if (isset($_GET['id'])) $aData = $oSql->selectArray('data', ['gpio_id' => intval($_GET['id'])]);
 else $aData = $oSql->selectArray('data');
+
+
+$aGpios = array();
+foreach ($aGpioData as $aGpio) {
+    $aGpios[$aGpio['id']] = $aGpio;
+}
 
 
 ?>
@@ -59,13 +64,15 @@ else $aData = $oSql->selectArray('data');
 <body>
 <p>
     [<a href="index.php">Startseite</a>][<a href="show.php?clear=true">Tabelle leeren</a>][<a
-        href="show.php?reset=true">Tabelle zurücksetzen</a>]<?php if(isset($_GET['id'])) { ?>[<a href="show.php">Log für alle GPIO-Ports zeigen</a>] <?php } ?>
+        href="show.php?reset=true">Tabelle zurücksetzen</a>]<?php if (isset($_GET['id'])) { ?>[<a href="show.php">Log
+        für alle GPIO-Ports zeigen</a>] <?php } ?>
 </p><br>
 
 <table>
     <tr>
         <td><span style="font-weight: bold;">Index</span></td>
         <td><span style="font-weight: bold;">Gpio Nr</span></td>
+        <td><span style="font-weight: bold;">Gpio Name</span></td>
         <td><span style="font-weight: bold;">Wert</span></td>
         <td><span style="font-weight: bold;">Zeit</span></td>
     </tr>
@@ -74,12 +81,13 @@ else $aData = $oSql->selectArray('data');
     foreach ($aData as $aSet) {
         echo('<tr>');
         echo('<td>' . $aSet['id'] . '</td>');
+        echo('<td>' . $aGpios[$aSet['gpio_id']]['kernel_path'] . '</td>');
         echo('<td>' . $aGpios[$aSet['gpio_id']]['name'] . '</td>');
         echo('<td>' . $aSet['value'] . '</td>');
         echo('<td>' . $aSet['timestamp'] . '</td>');
 
 
-        echo('<td>[<a href="gpio.php?id=' . $aSet['gpio_id'] . '">Gpio settings</a>]</td>');
+        echo('<td>[<a href="gpio.php?id=' . $aSet['gpio_id'] . '">Gpio Einstellungen</a>][<a href="show.php?id=' . $aSet['gpio_id'] . '">Nur diesen zeigen</a>]</td>');
 
         echo('</tr>');
     }

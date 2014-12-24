@@ -18,11 +18,12 @@ print_r($aPorts);
 
 foreach ($aPorts as $aPort) {
     if (file_exists('/sys/class/gpio/gpio' . $aPort['kernel_path'] . '/value')) { //gpio was already exported
-        exec('echo ' . $aPort['kernel_path'] . ' > /sys/class/gpio/unexport');
+        exec('sudo echo ' . $aPort['kernel_path'] . ' > /sys/class/gpio/unexport');
     }
 
     exec('echo ' . $aPort['kernel_path'] . ' > /sys/class/gpio/export');
     exec('echo "in" > /sys/class/gpio/gpio' . $aPort['kernel_path'] . '/direction');
 
     exec('php worker.php ' . $aPort['id'] . ' > /dev/null 2>/dev/null &');
+    exec('php worker_alive.php ' . $aPort['id'] . ' > /dev/null 2>/dev/null &');
 }

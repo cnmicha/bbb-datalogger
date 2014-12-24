@@ -6,16 +6,14 @@
  * Time: 19:58
  */
 
-const WORKER_SH = '/root/datalogger/service.sh';
-
 
 require_once('config/config.inc.php');
 require_once('classes/mysql.class.php');
 
 
-if (isset($_GET['start'])) {
-    if ($_GET['start'] == 'true') {
-        exec('sudo sh ' . WORKER_SH);
+if (isset($_GET['restart'])) {
+    if ($_GET['restart'] == 'true') {
+        exec('sudo reboot');
 
         header("HTTP/1.1 303 See Other");
         header('Location: index.php');
@@ -25,6 +23,24 @@ if (isset($_GET['start'])) {
 if (isset($_GET['stop'])) {
     if ($_GET['stop'] == 'true') {
         exec('sudo killall php');
+
+        header("HTTP/1.1 303 See Other");
+        header('Location: index.php');
+    }
+}
+
+if (isset($_GET['start'])) {
+    if ($_GET['start'] == 'true') {
+        exec('sudo php /root/datalogger/service.php');
+
+        header("HTTP/1.1 303 See Other");
+        header('Location: index.php');
+    }
+}
+
+if (isset($_GET['shutdown'])) {
+    if ($_GET['shutdowm'] == 'true') {
+        exec('sudo shutdown -h now');
 
         header("HTTP/1.1 303 See Other");
         header('Location: index.php');
@@ -55,11 +71,25 @@ $aAllGpios = $oSql->selectArray('gpio');
     }
 </style>
 
+<script type="text/javascript">
+    setTimeout(function () {
+        window.location.reload(1);
+    }, 5000);
+</script>
+
 <body>
 <p>
-    [<a href="show.php">Log zeigen</a>][<a href="index.php?start=true">Dienst starten</a>][<a
-        href="index.php?stop=true">Dienst stoppen</a>]
+    [<a href="show.php">Log zeigen</a>]<br>
+    [<a href="index.php?start=true">Dienst starten (<span style="color: red;">Achtung!</span>)</a>]<br>
+    [<a href="index.php?stop=true">Dienst stoppen</a>]<br>
+    [<a href="index.php?restart=true">Beaglebone neustarten</a>][<a href="index.php?shutdown=true">Beaglebone
+        herunterfahren</a>]
 </p><br>
+
+<iframe src="worker_alive.php" style="width: 300px; height: 50px; border: none;"></iframe>
+
+<br>
+[<a href="gpio.php">Neuer GPIO</a>]
 
 <table>
     <tr>

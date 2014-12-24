@@ -112,7 +112,7 @@ class cMySql
      *                           formatted dates, ect).
      * @return boolean Returns TRUE on success or FALSE on error
      */
-    public function insertUpdate($tableName, $valuesArray, $whereArray)
+    public function insertUpdate($tableName, $valuesArray, $whereArray = array())
     {
         $this->resetError();
         $this->selectRows($tableName, $whereArray);
