@@ -22,15 +22,6 @@ if (isset($_GET['restart'])) {
     }
 }
 
-if (isset($_GET['start'])) {
-    if ($_GET['start'] == 'true') {
-        exec('sudo sh /root/datalogger/start_service.sh');
-
-        header("HTTP/1.1 303 See Other");
-        header('Location: index.php');
-    }
-}
-
 if (isset($_GET['stop'])) {
     if ($_GET['stop'] == 'true') {
         $oSql->updateRows('sys', ['value' => '1'], ['name' => 'worker_exit']);
@@ -42,7 +33,7 @@ if (isset($_GET['stop'])) {
 }
 
 if (isset($_GET['shutdown'])) {
-    if ($_GET['shutdowm'] == 'true') {
+    if ($_GET['shutdown'] == 'true') {
         exec('sudo shutdown -h now');
 
         header("HTTP/1.1 303 See Other");

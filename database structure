@@ -1,12 +1,12 @@
-table alive
-==========
+table sys
+=========
 
 -- phpMyAdmin SQL Dump
 -- version 4.0.10deb1
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 24. Dez 2014 um 15:43
+-- Erstellungszeit: 24. Dez 2014 um 16:22
 -- Server Version: 5.5.40-0ubuntu0.14.04.1
 -- PHP-Version: 5.5.9-1ubuntu4.5
 
@@ -20,20 +20,23 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `alive`
+-- Tabellenstruktur für Tabelle `sys`
 --
 
-CREATE TABLE IF NOT EXISTS `alive` (
+CREATE TABLE IF NOT EXISTS `sys` (
   `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-  `worker_lastseen` datetime DEFAULT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=4 ;
 
 --
--- Daten für Tabelle `alive`
+-- Daten für Tabelle `sys`
 --
 
-INSERT INTO `alive` (`id`, `worker_lastseen`) VALUES
+INSERT INTO `sys` (`id`, `name`, `value`) VALUES
+(1, 'worker_lastseen', '2014-12-24 16:19:16'),
+(2, 'worker_exit', '1');
 
 
 
